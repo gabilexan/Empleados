@@ -1,0 +1,73 @@
+﻿@model IEnumerable<Empleados.Models.Empleado>
+@{
+    ViewData["Title"] = "Lista de empleados";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    @if(TempData["mensaje"] != null)
+            {
+                <div class="alert alert-warning alert-dismissible fade show"  >
+                @TempData["mensaje"]
+                <button type ="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+            }
+
+    <div class="row">
+        <div class="col-sm-6">
+            <h3>Lista de  empleados</h3>
+        </div>
+        <div class="col-sm-6">
+            <a class="btn btn-success d-block" asp-action="Create" asp-controller="Empleados">Agregar nuevo empleado</a>
+        </div>
+    </div>
+
+    @* Validacion si  existen o no registros que agregar *@
+    <div class="row">
+        @if(Model.Count() > 0)
+            {
+             <table class="table table-bordered table-striped">
+                 <thead>
+                     <tr>
+                         <td>@Html.DisplayNameFor(m => m.Idempleado)</td>
+                         <td>@Html.DisplayNameFor(m => m.NombreEmpleado)</td>
+                         <td>@Html.DisplayNameFor(m => m.ApellidoEmpleado)</td>
+                         <td>@Html.DisplayNameFor(m => m.TelefonoEmpleado)</td>
+                         <td>@Html.DisplayNameFor(m => m.CorreoEmpleado)</td>
+                         <td>@Html.DisplayNameFor(m => m.Foto)</td>
+                         <td>@Html.DisplayNameFor(m => m.FechaContratacion)</td>
+                         <td>Acciones</td>
+                     </tr>
+                 </thead>
+                 <tbody>
+                     @*se usa  el foreach para  recorrer todos los registros de la tabla   *@
+                    @foreach (var item in Model)
+                {
+                     <tr>
+                         <td>@item.Idempleado</td>
+                         <td>@item.NombreEmpleado</td>
+                         <td>@item.ApellidoEmpleado</td>
+                         <td>@item.TelefonoEmpleado</td>
+                         <td>@item.CorreoEmpleado</td>
+                         <td>@item.Foto</td>
+                         <td>@item.FechaContratacion</td>
+                         <td>
+                             <a asp-controller="Empleados" asp-action="Edit" asp-route-id="@item.Idempleado" class="btn btn-warning col text-center">Editar</a>
+                             <a asp-controller="Empleados" asp-action="Delete" asp-route-id="@item.Idempleado" class="btn btn-danger col text-center">Eliminar</a>
+                             
+                         </td>
+                     </tr>
+                }
+                 </tbody>
+             </table>
+            }
+            else
+            {
+            <p>No existen registros </p>
+            }
+    </div>
+
+</div>
+
